@@ -1,0 +1,14 @@
+{
+  "login": {
+    "login": "登录",
+    "logout": "退出登录",
+    "usernameTip": "请输入正确的用户名",
+    "passwordTip": "密码不能少于6位"
+  },
+  "common": {
+    "profile": "个人中心",
+    "dashboard": "首页",
+    "doc": "文档",
+    "guide": "引导"
+  }
+}
