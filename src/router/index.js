@@ -24,7 +24,7 @@ import Router from 'vue-router'
 import NProgress from 'nprogress'
 import getPageTitle from '@/utils/get-page-title'
 import store from '../store'
-import { getToken } from '@/utils/auth'
+import { getToken, getTokenName } from '@/utils/auth'
 import constantRoutes from './constantRoutes'
 
 Vue.use(Router)
@@ -36,19 +36,27 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
-const whiteList = ['/login', '/auth-redirect']
+const whiteList = ['/login', '/auth-redirect'] // 不重定向白名单
 router.beforeEach(async(to, from, next) => {
   // 开启progress bar
   NProgress.start()
   // 设置页面标题
   document.title = getPageTitle(to.meta.title)
   // 验证是否已经登录
-  const hasToken = getToken(store.getters.tokenKey)
+  let hasToken = store.getters.tokenKey && store.getters.token
+  if (!hasToken) {
+    // vue store里没有token信息，进一步判断cookies.(页面刷新时候 cookies已存在token)
+    const token = getToken()
+    if (token) {
+      store.commit('user/SET_TOKEN_KEY', getTokenName())
+      store.commit('user/SET_TOKEN', token)
+      hasToken = true
+    }
+  }
   if (hasToken) {
     // 已经登录
     if (to.path === '/login') {
       next({ path: '/' })
-      NProgress.done()
     } else {
       const hasRoles = store.getters.permission_routes && store.getters.permission_routes.length > 0
       if (hasRoles) {
@@ -65,7 +73,6 @@ router.beforeEach(async(to, from, next) => {
       next()
     } else {
       next(`/login?redirect=${to.path}`)
-      NProgress.done()
     }
   }
 })

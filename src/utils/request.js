@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import NProgress from 'nprogress'
+import { getTokenName, setToken } from './auth'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -27,16 +28,6 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
-
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
   response => {
     NProgress.done()
     if (response.status !== 200) {
@@ -45,6 +36,14 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
+    }
+    if (response.headers.token_refresh === 'OK') {
+      // token被刷新了
+      const token = response.headers[(getTokenName() || '').toLowerCase()]
+      // 更新vue store 中的值
+      store.commit('user/SET_TOKEN', token)
+      // 更新cookies token值
+      setToken(token)
     }
     const res = response.data
     // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
