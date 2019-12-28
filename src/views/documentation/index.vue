@@ -21,6 +21,10 @@
       target="_blank"
       href="https://panjiachen.github.io/vue-element-admin-site/zh/job/"
     >内推招聘</a>
+    <a class="document-btn" @click="test">测试ajax</a>
+    <div>
+      {{data}}
+    </div>
   </div>
 </template>
 
@@ -42,7 +46,15 @@ export default {
         { title: '优雅的使用 icon', href: 'https://juejin.im/post/59bb864b5188257e7a427c09' },
         { title: 'webpack4（上）', href: 'https://juejin.im/post/59bb864b5188257e7a427c09' },
         { title: 'webpack4（下）', href: 'https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc' }
-      ]
+      ],
+      data: ''
+    }
+  },
+  methods: {
+    test() {
+      this.$http.get('user/info').then(res => {
+        this.data = res
+      })
     }
   }
 }

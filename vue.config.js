@@ -42,8 +42,9 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy: devConfig.proxy,
-    after: require('./mock/mock-server.js')
+    proxy: devConfig.proxy
+    // ,
+    // after: require('./mock/mock-server.js')
   },
 
   configureWebpack: {

@@ -2,13 +2,19 @@
   "login": {
     "login": "Sign in",
     "logout": "Logout",
+    "re_Login": "Re-Login",
     "usernameTip": "Please enter the correct user name",
-    "passwordTip": "The password can not be less than 6 digits"
+    "passwordTip": "The password can not be less than 6 digits",
+    "error": "Login failed, please try again later!",
+    "confirm_logout": "You have been logged out, you can cancel to stay on this page, or log in again.",
+    "confirm_logout_title": "'Confirm logout"
   },
   "common": {
+    "cancel": "cancel",
     "profile": "Profile",
     "dashboard": "Dashboard",
     "doc": "Documentation",
-    "guide": "Guide"
+    "guide": "Guide",
+    "networkError": "Access failed，please try again later!"
   }
 }

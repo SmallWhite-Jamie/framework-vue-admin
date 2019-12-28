@@ -1,4 +1,4 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import constantRoutes from '@/router/constantRoutes'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -47,16 +47,15 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }) {
     return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      // let accessedRoutes = []
+      // 加载服务端路由信息
+
+      // accessedRoutes = asyncRoutes || []
+      // accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      commit('SET_ROUTES', [])
+      resolve([])
     })
   }
 }

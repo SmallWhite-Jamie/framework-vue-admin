@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { logout, getInfo, getMenusList } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -9,10 +9,14 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  permissions: []
+  permissions: [],
+  menus: []
 }
 
 const mutations = {
+  SET_MENUS: (state, menus) => {
+    state.menus = menus
+  },
   SET_PERMISSION: (state, ps) => {
     state.permissions = ps
   },
@@ -37,21 +41,18 @@ const mutations = {
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
+  // 获取菜单列表
+  getMenusList({ commit }) {
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      getMenusList().then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.data)
-        setToken(data.data)
-        resolve()
+        commit('SET_MENUS', data)
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {

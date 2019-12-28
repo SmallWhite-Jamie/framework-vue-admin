@@ -185,7 +185,8 @@ export default {
                   this.$store.commit('user/SET_TOKEN', token)
                   this.$store.commit('user/SET_ROLES', roles)
                   this.$store.commit('user/SET_PERMISSION', permissions)
-                  this.$store.dispatch('permission/generateRoutes', roles)
+                  // this.$store.dispatch('user/getMenusList')
+                  this.$store.dispatch('permission/generateRoutes')
                   this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
                   this.loading = false
                 } else {

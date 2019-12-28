@@ -49,6 +49,11 @@ export default {
     isCollapse() {
       return !this.sidebar.opened
     }
+  },
+  mounted() {
+    this.$store.dispatch('user/getMenusList')
+  },
+  methods: {
   }
 }
 </script>

@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-// import { getTokenName, getToken } from '@/utils/auth'
-
+import NProgress from 'nprogress'
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -13,7 +12,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
+    NProgress.start()
     if (store.getters.tokenKey && store.getters.token) {
       config.headers[store.getters.tokenKey] = store.getters.token
     }
@@ -39,6 +38,7 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    NProgress.done()
     if (response.status !== 200) {
       Message({
         message: response.data.message || 'Error',
@@ -48,11 +48,15 @@ service.interceptors.response.use(
     }
     const res = response.data
     // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-    if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+    if (res.code === 4000 || res.code === 50012 || res.code === 50014) {
       // to re-login
-      MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-        confirmButtonText: 'Re-Login',
-        cancelButtonText: 'Cancel',
+      const msg = window.$vue.$i18n.t('login.confirm_logout')
+      const title = window.$vue.$i18n.t('login.confirm_logout_title')
+      const confirmText = window.$vue.$i18n.t('login.re_Login')
+      const cancelText = window.$vue.$i18n.t('common.cancel')
+      MessageBox.confirm(msg, title, {
+        confirmButtonText: confirmText,
+        cancelButtonText: cancelText,
         type: 'warning'
       }).then(() => {
         store.dispatch('user/resetToken').then(() => {
@@ -63,11 +67,11 @@ service.interceptors.response.use(
     return res
   },
   error => {
-    console.log('err' + error) // for debug
+    console.error(error)
     Message({
-      message: error.message,
+      message: window.$vue.$i18n.t('common.networkError'),
       type: 'error',
-      duration: 5 * 1000
+      duration: 3 * 1000
     })
     return Promise.reject(error)
   }
