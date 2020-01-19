@@ -51,7 +51,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('user/getMenusList')
   },
   methods: {
   }

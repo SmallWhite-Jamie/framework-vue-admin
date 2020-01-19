@@ -15,6 +15,12 @@
     "dashboard": "Dashboard",
     "doc": "Documentation",
     "guide": "Guide",
-    "networkError": "Access failed，please try again later!"
+    "networkError": "Access failed，please try again later!",
+    "opSuccess": "Operation succeeded!"
+  },
+  "asyncMenu": {
+    "auth": "Auth",
+    "role_manager": "Role manager",
+    "permission_manager": "Permission manager"
   }
 }

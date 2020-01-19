@@ -92,6 +92,7 @@ export default {
       this.selectedI18n = command
       this.$store.commit('app/SET_LANGUAGE', command)
       this.$i18n.locale = command
+      this.$message.success(this.$t('common.opSuccess'))
     },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')

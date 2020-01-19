@@ -41,18 +41,6 @@ const mutations = {
 }
 
 const actions = {
-  // 获取菜单列表
-  getMenusList({ commit }) {
-    return new Promise((resolve, reject) => {
-      getMenusList().then(response => {
-        const { data } = response
-        commit('SET_MENUS', data)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {

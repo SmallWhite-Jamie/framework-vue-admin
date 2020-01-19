@@ -50,7 +50,6 @@ export default [
       }
     ]
   },
-
   {
     path: '/icon',
     component: Layout,
@@ -206,20 +205,6 @@ export default [
       }
     ]
   },
-
-  {
-    path: '/pdf',
-    component: Layout,
-    redirect: '/pdf/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/pdf/index'),
-        name: 'PDF',
-        meta: { title: 'PDF', icon: 'pdf' }
-      }
-    ]
-  },
   {
     path: '/pdf/download',
     component: () => import('@/views/pdf/download'),
@@ -261,8 +246,5 @@ export default [
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  }
 ]

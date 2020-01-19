@@ -30,8 +30,8 @@ import constantRoutes from './constantRoutes'
 Vue.use(Router)
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  // 所有路由导航，让页面滚动到顶部
+  scrollBehavior: () => ({ x: 0, y: 0 }),
   routes: constantRoutes
 })
 
@@ -63,7 +63,12 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         await store.dispatch('user/getInfo')
-        await store.dispatch('permission/generateRoutes')
+        // 获取服务端路由信息，添加到本地路由中
+        const asyncRouter = await store.dispatch('permission/generateAsyncRoutes')
+        // { path: '*', redirect: '/404', hidden: true } 必须放在所有路由之后，解决刷新后404问题
+        console.log(asyncRouter)
+        asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
+        router.addRoutes(asyncRouter)
         next({ ...to, replace: true })
       }
     }

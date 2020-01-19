@@ -20,7 +20,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    // do something with request error
+    NProgress.done()
     console.log(error) // for debug
     return Promise.reject(error)
   }
@@ -46,8 +46,8 @@ service.interceptors.response.use(
       setToken(token)
     }
     const res = response.data
-    // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-    if (res.code === 4000 || res.code === 50012 || res.code === 50014) {
+    // 4000 token 令牌验证失败
+    if (res.code === 4000) {
       // to re-login
       const msg = window.$vue.$i18n.t('login.confirm_logout')
       const title = window.$vue.$i18n.t('login.confirm_logout_title')
@@ -66,6 +66,7 @@ service.interceptors.response.use(
     return res
   },
   error => {
+    NProgress.done()
     console.error(error)
     Message({
       message: window.$vue.$i18n.t('common.networkError'),

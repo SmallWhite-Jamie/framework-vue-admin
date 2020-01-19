@@ -15,6 +15,13 @@
     "dashboard": "首页",
     "doc": "文档",
     "guide": "引导",
-    "networkError": "访问失败，请稍后重试！"
+    "networkError": "访问失败，请稍后重试！",
+    "opSuccess": "操作成功！"
+  },
+  "asyncMenu": {
+    "auth": "权限认证相关",
+    "role_manager": "角色管理",
+    "permission_manager": "权限管理"
   }
+
 }
