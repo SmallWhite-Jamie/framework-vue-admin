@@ -17,34 +17,33 @@ function handleMenus2Router(menus) {
       hidden: false,
       path: menu.metaMap ? menu.metaMap.router : '',
       meta: {
+        type: 'async',
         code: menu.metaMap ? menu.metaMap.code : '',
         title: menu.text,
         icon: menu.metaMap && menu.metaMap.icon ? menu.metaMap.icon : 'component'
       }
     }
     if (menu.children && menu.children.length > 0) {
+      // 父路由
+      sideBarItem.component = Layout
       sideBarItem.children = []
       menu.children.forEach(child => {
         sideBarItem.children.push(buildChildTree(child))
       })
+    } else {
+      // 子路由
+      if (sideBarItem.path) {
+        let path
+        if (sideBarItem.path.substr(0, 1) === '/') {
+          path = sideBarItem.path.substr(1, sideBarItem.path.length)
+        } else {
+          path = sideBarItem.path
+        }
+        sideBarItem.component = () => import(`@/views/${path}`)
+      }
     }
     return sideBarItem
   }
-  // return [
-  //   {
-  //     path: '/pdf',
-  //     component: Layout,
-  //     redirect: '/pdf/index',
-  //     children: [
-  //       {
-  //         path: 'index',
-  //         component: () => import('@/views/pdf/index'),
-  //         name: 'PDF',
-  //         meta: { title: 'PDF', icon: 'pdf' }
-  //       }
-  //     ]
-  //   }
-  // ]
 }
 
 const state = {
