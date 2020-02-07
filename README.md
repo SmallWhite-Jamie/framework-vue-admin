@@ -69,7 +69,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/PanJiaChen/vue-element-admin.git
+git clone git@github.com:SmallWhite-Jamie/framework-vue-admin.git
 
 # 进入项目目录
 cd vue-element-admin
@@ -84,7 +84,7 @@ npm install --registry=https://registry.npm.taobao.org
 npm run dev
 ```
 
-浏览器访问 http://localhost:9527
+浏览器访问 http://localhost:80
 
 ## 发布
 
